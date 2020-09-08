@@ -16,6 +16,11 @@ red = (255, 0, 0)
 
 weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
+evenMonth = 30
+unevenMonth = 31
+day_x = 0
+day_y = 2
+
 # End application configurations.
 
 
@@ -43,25 +48,24 @@ def draw_week_days():
         
         x = x + 1
 
+def draw_month_days():
+	global day_x
+	global day_y
+	for x in range(0, evenMonth):
+		sense.set_pixel(day_x, day_y, green)
+		day_x += 1
+		if(day_x == 8):
+			day_y += 1
+			day_x = 0
 
 # End functions.
 
 
+# Main Program.
+
 sense.clear(0,0,0)
 
 draw_week_days()
+draw_month_days()
 
-sense.clear(0,0,0)
-
-green = (0, 128, 0)
-evenMonth = 30
-unevenMonth = 31
-day_x = 0
-day_y = 0
-
-for x in range(0, evenMonth):
-	sense.set_pixel(day_x, day_y, green)
-	day_x += 1
-	if(day_x == 8):
-		day_y += 1
-		day_x = 0
+# End Main Program.
