@@ -14,7 +14,7 @@ blue = (0, 0, 255)
 green = (0, 128, 0)
 red = (255, 0, 0)
 
-week_days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+week_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 february_month = 29
 even_month = 30
@@ -30,16 +30,16 @@ month_day_y = 2
 
 def get_week_day_color(day):
     switcher = {
-        "Sunday": blue,
         "Monday": green,
         "Tuesday": blue,
         "Wednesday": green,
         "Thursday": blue,
         "Friday": green,
-        "Saturday": blue
+        "Saturday": blue,
+        "Sunday": green,
     }
     
-    return switcher.get(day, "Invalid day")
+    return switcher.get(day, red)
 
 def draw_week_days():
     global week_days_position_y
