@@ -18,8 +18,8 @@ weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 
 evenMonth = 30
 unevenMonth = 31
-day_x = 0
-day_y = 2
+week_days_position_y = 0
+month_day_y = 2
 
 # End application configurations.
 
@@ -40,23 +40,24 @@ def get_week_day_color(day):
     return switcher.get(day, "Invalid day")
 
 def draw_week_days():
+    global week_days_position_y
     x = 0
-    y = 0
     for day in weekdays:
         color = get_week_day_color(day)
-        sense.set_pixel(x, y, color)
+        sense.set_pixel(x, week_days_position_y, color)
         
         x = x + 1
 
 def draw_month_days():
-	global day_x
-	global day_y
-	for x in range(0, evenMonth):
-		sense.set_pixel(day_x, day_y, green)
-		day_x += 1
-		if(day_x == 8):
-			day_y += 1
-			day_x = 0
+    global month_day_y
+    month_day_x = 0
+    for x in range(0, evenMonth):
+        sense.set_pixel(month_day_x, month_day_y, green)
+        
+        month_day_x += 1
+        if (month_day_x == 8):
+            month_day_y += 1
+            month_day_x = 0
 
 # End functions.
 
