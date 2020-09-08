@@ -65,12 +65,11 @@ def draw_month_days():
                 month_day_x += 1
                 continue
                 
-            
-            if month_day_x != 8:
-                sense.set_pixel(month_day_x, month_day_y, green)
-                
-                month_day_x += 1
+            if month_day_x == 8:
                 continue
+            
+            sense.set_pixel(month_day_x, month_day_y, green)                
+            month_day_x += 1
             
         
         # Create new row for displaying the days.
