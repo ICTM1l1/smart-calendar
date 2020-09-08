@@ -1,4 +1,6 @@
 from sense_hat import SenseHat
+from datetime import datetime
+import calendar
 
 # Object constructions.
 
@@ -13,30 +15,30 @@ white = (255, 255, 255)
 blue = (0, 0, 255)
 green = (0, 128, 0)
 red = (255, 0, 0)
+orange = (255, 165, 0)
 
 week_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
-february_month = 29
-even_month = 30
-uneven_month = 31
-
 week_days_position_y = 0
-month_day_y = 2
+month_day_y = 1
 
 # End application configurations.
 
 
 # Functions.
 
+def get_month_weeks(year, month):
+     return calendar.monthcalendar(year, month) 
+
 def get_week_day_color(day):
     switcher = {
-        "Monday": green,
+        "Monday": orange,
         "Tuesday": blue,
-        "Wednesday": green,
+        "Wednesday": orange,
         "Thursday": blue,
-        "Friday": green,
+        "Friday": orange,
         "Saturday": blue,
-        "Sunday": green,
+        "Sunday": orange,
     }
     
     return switcher.get(day, red)
@@ -53,13 +55,26 @@ def draw_week_days():
 def draw_month_days():
     global month_day_y
     month_day_x = 0
-    for x in range(0, even_month):
-        sense.set_pixel(month_day_x, month_day_y, green)
+    
+    month_weeks = get_month_weeks(2020, 9)
+    for weeks in month_weeks:        
+        for day in weeks:
+            if day == 0:
+                sense.set_pixel(month_day_x, month_day_y, white)
+                month_day_x += 1
+                continue
+                
+            
+            if month_day_x != 8:
+                sense.set_pixel(month_day_x, month_day_y, green)
+                
+                month_day_x += 1
+                continue
+            
         
-        month_day_x += 1
-        if (month_day_x == 8):
-            month_day_y += 1
-            month_day_x = 0
+        # Create new row for displaying the days.
+        month_day_y += 1
+        month_day_x = 0
 
 # End functions.
 
