@@ -14,10 +14,12 @@ blue = (0, 0, 255)
 green = (0, 128, 0)
 red = (255, 0, 0)
 
-weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+week_days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-evenMonth = 30
-unevenMonth = 31
+february_month = 29
+even_month = 30
+uneven_month = 31
+
 week_days_position_y = 0
 month_day_y = 2
 
@@ -42,7 +44,7 @@ def get_week_day_color(day):
 def draw_week_days():
     global week_days_position_y
     x = 0
-    for day in weekdays:
+    for day in week_days:
         color = get_week_day_color(day)
         sense.set_pixel(x, week_days_position_y, color)
         
@@ -51,7 +53,7 @@ def draw_week_days():
 def draw_month_days():
     global month_day_y
     month_day_x = 0
-    for x in range(0, evenMonth):
+    for x in range(0, even_month):
         sense.set_pixel(month_day_x, month_day_y, green)
         
         month_day_x += 1
