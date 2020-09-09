@@ -81,6 +81,9 @@ def move_up(event):
         
         if previous_pos_y != controller_pos_y:
             previous_pos_y = controller_pos_y
+    
+    # Reinitialize the program.
+    run_program()
             
 def move_down(event):
     global controller_pos_y
@@ -107,6 +110,9 @@ def move_down(event):
         
         if previous_pos_y != controller_pos_y:
             previous_pos_y = controller_pos_y
+    
+    # Reinitialize the program.
+    run_program()
         
 def move_right(event):
     global controller_pos_x
@@ -132,7 +138,10 @@ def move_right(event):
             previous_pos_x = controller_pos_x
         
         if previous_pos_y != controller_pos_y:
-            previous_pos_y = controller_pos_y       
+            previous_pos_y = controller_pos_y
+    
+    # Reinitialize the program.
+    run_program()
         
 def move_left(event):
     global controller_pos_x
@@ -159,6 +168,9 @@ def move_left(event):
         
         if previous_pos_y != controller_pos_y:
             previous_pos_y = controller_pos_y
+            
+    # Reinitialize the program.
+    run_program()
 
 def click(event):
     global start_year
@@ -183,6 +195,7 @@ def click(event):
         start_month = 1
         start_year += 1
     
+    # Reinitialize the program.
     run_program()
 
 def get_month_weeks(year, month):
