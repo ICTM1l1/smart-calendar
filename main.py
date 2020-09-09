@@ -169,9 +169,19 @@ def click(event):
     
     # Go to the previous month.
     if controller_pos_x == navigate_history_pos_x and controller_pos_y == navigate_history_pos_y:
-        start_month = start_month - 1
+        start_month -= 1
         
     # Go to the next month.
+    if controller_pos_x == navigate_future_pos_x and controller_pos_y == navigate_future_pos_y:
+        start_month += 1
+    
+    # Decrease or increase the year if the month has reached an invalid value.
+    if start_month < 1:
+        start_month = 12
+        start_year -= 1
+    elif start_month > 12:
+        start_month = 1
+        start_year += 1
     
     run_program()
 
