@@ -31,6 +31,7 @@ month_day_y = 1
 
 controller_pos_x = 0
 controller_pos_y = 1
+previous_pos_color = red
 previous_pos_x = controller_pos_x
 previous_pos_y = controller_pos_y
 
@@ -61,11 +62,13 @@ def move_down(event):
 
 def move_right(event):
     global controller_pos_x
+    global previous_pos_color
     global previous_pos_x
     global previous_pos_y
     
     if event.action == 'pressed' and controller_pos_x < 7:
         controller_pos_x += 1
+        previous_pos_color = sense.get_pixel(controller_pos_x, controller_pos_y)
         sense.set_pixel(controller_pos_x, controller_pos_y, pink)
        
         # Changes the previous pixel back to his previous color.
