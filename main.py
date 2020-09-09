@@ -31,9 +31,15 @@ month_day_y = 1
 
 controller_pos_x = 0
 controller_pos_y = 1
+
 previous_pos_color = red
 previous_pos_x = controller_pos_x
 previous_pos_y = controller_pos_y
+
+navigate_history_pos_x = 0
+navigate_history_pos_y = 7
+navigate_future_pos_x = 6
+navigate_future_pos_y = 7
 
 # End application configurations.
 
@@ -45,7 +51,11 @@ def draw_controller():
     previous_pos_color = sense.get_pixel(controller_pos_x, controller_pos_y)
     
     sense.set_pixel(controller_pos_x, controller_pos_y, pink)
-    
+
+def draw_navigation():
+    sense.set_pixel(navigate_history_pos_x, navigate_history_pos_y, pink)
+    sense.set_pixel(navigate_future_pos_x, navigate_future_pos_y, pink)
+
 def move_up(event):
     global controller_pos_y
     if event.action == 'pressed' and controller_pos_y > 0:
@@ -181,6 +191,7 @@ sense.clear(0,0,0)
 draw_week_days()
 draw_month_days()
 draw_controller()
+draw_navigation()
 
 sense.stick.direction_up = move_up
 sense.stick.direction_down = move_down
