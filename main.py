@@ -55,8 +55,9 @@ def draw_week_days():
 def draw_month_days():
     global month_day_y
     month_day_x = 0
+    now = datetime.now()
     
-    month_weeks = get_month_weeks(2020, 9)
+    month_weeks = get_month_weeks(now.year, now.month)
     for weeks in month_weeks:        
         for day in weeks:
             if day == 0:
@@ -64,12 +65,11 @@ def draw_month_days():
                 month_day_x += 1
                 continue
                 
-            
-            if month_day_x != 8:
-                sense.set_pixel(month_day_x, month_day_y, green)
-                
-                month_day_x += 1
+            if month_day_x == 8:
                 continue
+            
+            sense.set_pixel(month_day_x, month_day_y, green)                
+            month_day_x += 1
             
         
         # Create new row for displaying the days.
