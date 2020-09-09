@@ -1,7 +1,6 @@
 from sense_hat import SenseHat
 from datetime import datetime
 import calendar
-import sys, getopt
 
 # Object constructions.
 
@@ -70,10 +69,10 @@ def move_right(event):
     if event.action == 'pressed' and controller_pos_x < 7:
         controller_pos_x += 1
         previous_pos_color = sense.get_pixel(controller_pos_x, controller_pos_y)
+        
         sense.set_pixel(controller_pos_x, controller_pos_y, pink)
-       
         # Changes the previous pixel back to his previous color.
-        sense.set_pixel(previous_pos_x, previous_pos_y, previous_pos_color)
+        sense.set_pixel(previous_pos_x, previous_pos_y, red)
         
         # Keeps track of the previous position of the cursor.
         if previous_pos_x != controller_pos_x:
@@ -84,11 +83,24 @@ def move_right(event):
         
 def move_left(event):
     global controller_pos_x
+    global previous_pos_color
+    global previous_pos_x
+    global previous_pos_y
+    
     if event.action == 'pressed' and controller_pos_x > 0:
-        previous_pos_x = controller_pos_x
-        previous_pos_y = controller_pos_y
         controller_pos_x -= 1
-        sense.set_pixel(previous_pos_x, previous_pos_y, white)
+        previous_pos_color = sense.get_pixel(controller_pos_x, controller_pos_y)
+        
+        sense.set_pixel(controller_pos_x, controller_pos_y, pink)
+        # Changes the previous pixel back to his previous color.
+        sense.set_pixel(previous_pos_x, previous_pos_y, red)
+        
+        # Keeps track of the previous position of the cursor.
+        if previous_pos_x != controller_pos_x:
+            previous_pos_x = controller_pos_x
+        
+        if previous_pos_y != controller_pos_y:
+            previous_pos_y = controller_pos_y
 
 def get_month_weeks(year, month):
     return calendar.monthcalendar(year, month) 
@@ -155,20 +167,11 @@ sense.clear(0,0,0)
 
 draw_week_days()
 draw_month_days()
+draw_controller()
 
 sense.stick.direction_up = move_up
 sense.stick.direction_down = move_down
 sense.stick.direction_right = move_right
 sense.stick.direction_left = move_left
-
-while(True):
-    try:
-        draw_controller()
-    except KeyboardInterrupt:
-        print("Stop the calendar program.")
-        sys.exit(2)
-    except:
-        print("Something went wrong")
-        sys.exit(2)
 
 # End Main Program.
