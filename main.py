@@ -1,6 +1,7 @@
 from sense_hat import SenseHat
 from datetime import datetime
 import calendar
+import sys, getopt
 
 # Object constructions.
 
@@ -161,6 +162,13 @@ sense.stick.direction_right = move_right
 sense.stick.direction_left = move_left
 
 while(True):
-    draw_controller()
+    try:
+        draw_controller()
+    except KeyboardInterrupt:
+        print("Stop the calendar program.")
+        sys.exit(2)
+    except:
+        print("Something went wrong")
+        sys.exit(2)
 
 # End Main Program.
