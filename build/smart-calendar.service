@@ -1,0 +1,10 @@
+[Unit]
+Description=Smart calendar Service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python /home/pi/smart-calendar/main.py
+
+[Install]
+WantedBy=multi-user.target
