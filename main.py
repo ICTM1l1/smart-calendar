@@ -175,6 +175,8 @@ def move_left(event):
 def click(event):
     global start_year
     global start_month
+    previous_year = start_year
+    previous_month = start_month
     
     if event.action != 'pressed':
         return
@@ -194,6 +196,10 @@ def click(event):
     elif start_month > 12:
         start_month = 1
         start_year += 1
+    
+    if start_month != previous_month or start_year != previous_year:
+        # Show the current month and year.
+        sense.show_message('%s %s' % (calendar.month_name[start_month], start_year))
     
     # Reinitialize the program.
     run_program()
