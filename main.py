@@ -31,8 +31,8 @@ month_day_y = 1
 
 controller_pos_x = 0
 controller_pos_y = 1
-previous_pos_x = 0
-previous_pos_y = 0
+previous_pos_x = controller_pos_x
+previous_pos_y = controller_pos_y
 
 # End application configurations.
 
@@ -61,11 +61,22 @@ def move_down(event):
 
 def move_right(event):
     global controller_pos_x
+    global previous_pos_x
+    global previous_pos_y
+    
     if event.action == 'pressed' and controller_pos_x < 7:
-        previous_pos_x = controller_pos_x
-        previous_pos_y = controller_pos_y
         controller_pos_x += 1
-        sense.set_pixel(previous_pos_x, previous_pos_y, white)
+        sense.set_pixel(controller_pos_x, controller_pos_y, pink)
+       
+        # Changes the previous pixel back to his previous color.
+        sense.set_pixel(previous_pos_x, previous_pos_y, red)
+        
+        # Keeps track of the previous position of the cursor.
+        if previous_pos_x != controller_pos_x:
+            previous_pos_x = controller_pos_x
+        
+        if previous_pos_y != controller_pos_y:
+            previous_pos_y = controller_pos_y
         
 def move_left(event):
     global controller_pos_x
