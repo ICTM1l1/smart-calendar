@@ -58,21 +58,56 @@ def draw_navigation():
 
 def move_up(event):
     global controller_pos_y
-    if event.action == 'pressed' and controller_pos_y > 0:
-        previous_pos_x = controller_pos_x
-        previous_pos_y = controller_pos_y
+    global previous_pos_color
+    global previous_pos_x
+    global previous_pos_y
+    
+    if event.action == 'pressed' and controller_pos_y > 1:
         controller_pos_y -= 1
-        sense.set_pixel(previous_pos_x, previous_pos_y, white)
         
-
+        # Changes the previous pixel back to his previous color.
+        sense.set_pixel(previous_pos_x, previous_pos_y, previous_pos_color)
+        
+        # Write the color to the previous color if it is not the color from the cursor.
+        previous_color = sense.get_pixel(controller_pos_x, controller_pos_y)
+        if previous_color != pink:
+            previous_pos_color = previous_color 
+        
+        sense.set_pixel(controller_pos_x, controller_pos_y, pink)
+        
+        # Keeps track of the previous position of the cursor.
+        if previous_pos_x != controller_pos_x:
+            previous_pos_x = controller_pos_x
+        
+        if previous_pos_y != controller_pos_y:
+            previous_pos_y = controller_pos_y
+            
 def move_down(event):
     global controller_pos_y
-    if event.action == 'pressed' and controller_pos_y < 7:
-        previous_pos_x = controller_pos_x
-        previous_pos_y = controller_pos_y
+    global previous_pos_color
+    global previous_pos_x
+    global previous_pos_y
+    
+    if event.action == 'pressed' and controller_pos_y < 5:
         controller_pos_y += 1
-        sense.set_pixel(previous_pos_x, previous_pos_y, white)
-
+        
+        # Changes the previous pixel back to his previous color.
+        sense.set_pixel(previous_pos_x, previous_pos_y, previous_pos_color)
+        
+        # Write the color to the previous color if it is not the color from the cursor.
+        previous_color = sense.get_pixel(controller_pos_x, controller_pos_y)
+        if previous_color != pink:
+            previous_pos_color = previous_color 
+        
+        sense.set_pixel(controller_pos_x, controller_pos_y, pink)
+        
+        # Keeps track of the previous position of the cursor.
+        if previous_pos_x != controller_pos_x:
+            previous_pos_x = controller_pos_x
+        
+        if previous_pos_y != controller_pos_y:
+            previous_pos_y = controller_pos_y
+        
 def move_right(event):
     global controller_pos_x
     global previous_pos_color
