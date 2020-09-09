@@ -88,7 +88,7 @@ def move_down(event):
     global previous_pos_x
     global previous_pos_y
     
-    if event.action == 'pressed' and controller_pos_y < 5:
+    if event.action == 'pressed' and controller_pos_y < 7:
         controller_pos_y += 1
         
         # Changes the previous pixel back to his previous color.
@@ -160,6 +160,21 @@ def move_left(event):
         if previous_pos_y != controller_pos_y:
             previous_pos_y = controller_pos_y
 
+def click(event):
+    global start_year
+    global start_month
+    
+    if event.action != 'pressed':
+        return
+    
+    # Go to the previous month.
+    if controller_pos_x == navigate_history_pos_x and controller_pos_y == navigate_history_pos_y:
+        start_month = start_month - 1
+        
+    # Go to the next month.
+    
+    run_program()
+
 def get_month_weeks(year, month):
     return calendar.monthcalendar(year, month) 
 
@@ -216,21 +231,28 @@ def draw_month_days():
         month_day_y += 1
         month_day_x = 0
 
+def run_program():
+    global month_day_y
+    
+    sense.clear(0,0,0)
+    month_day_y = 1
+
+    draw_week_days()
+    draw_month_days()
+    draw_controller()
+    draw_navigation()
+
 # End functions.
 
 
 # Main Program.
 
-sense.clear(0,0,0)
-
-draw_week_days()
-draw_month_days()
-draw_controller()
-draw_navigation()
+run_program()
 
 sense.stick.direction_up = move_up
 sense.stick.direction_down = move_down
 sense.stick.direction_right = move_right
 sense.stick.direction_left = move_left
+sense.stick.direction_middle = click
 
 # End Main Program.
