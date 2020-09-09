@@ -73,7 +73,7 @@ def move_right(event):
         sense.set_pixel(controller_pos_x, controller_pos_y, pink)
        
         # Changes the previous pixel back to his previous color.
-        sense.set_pixel(previous_pos_x, previous_pos_y, red)
+        sense.set_pixel(previous_pos_x, previous_pos_y, previous_pos_color)
         
         # Keeps track of the previous position of the cursor.
         if previous_pos_x != controller_pos_x:
