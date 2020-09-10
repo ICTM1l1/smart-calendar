@@ -11,5 +11,5 @@ This is the repository for smart calendar on the Raspberry Pi.
 * sudo pip3 install python-dateutil
 
 ## Run the following commando's in order to run the script
-* chmod +x ./setup.sh
-* ./setup.sh
+* chmod +x ./build/install.sh
+* ./build/install.sh
