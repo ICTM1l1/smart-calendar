@@ -2,7 +2,7 @@
 This is the repository for smart calendar on the Raspberry Pi.
 
 
-# Install program
+# Install packages
 ## Packages
 * sudo pip3 install urllib3
 * sudo pip3 install ipinfo
