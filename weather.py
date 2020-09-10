@@ -47,7 +47,3 @@ def request_forecast(date, key = keys.weatherapi, location = get_ip_city()):
 	print(url)
 	data = http.request("GET", url)
 	return handle_forecast(json.loads(data.data.decode("UTF-8")))
-
-forecast = request_forecast('2020-09-12')
-
-#forecast = request_forecast(keys.weatherapi, get_ip_city(), '2020-09-12')
