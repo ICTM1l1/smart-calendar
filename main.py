@@ -320,7 +320,12 @@ def display_day(day):
     day_is_active = True
     
     selected_date = datetime(start_year, start_month, day)
-    current_weather = weather.request_forecast(selected_date)
+    current_date = datetime.now()
+    
+    current_weather = None
+    difference = abs((selected_date - current_date).days)
+    if difference < 14:
+        current_weather = weather.request_forecast(selected_date)
     
     start_datetime = datetime(start_year, start_month, day)
     end_datetime = datetime(start_year, start_month, day, 23, 59)
