@@ -37,7 +37,7 @@ def handle_forecast(f):
 # YYYY-mm-dd. it automatically detects if it historic data or not
 # and returns it as such. some fields are missing when it is
 # historic data, such as `condition` or `daily_chance_of_rain`
-def request_forecast(key, location, date):
+def request_forecast(date, key = keys.weatherapi, location = get_ip_city()):
 	params = urllib.parse.urlencode({'key': key, 'q': location, 'dt': date})
 	url = None
 	if historic_p(date):
@@ -47,5 +47,7 @@ def request_forecast(key, location, date):
 	print(url)
 	data = http.request("GET", url)
 	return handle_forecast(json.loads(data.data.decode("UTF-8")))
+
+forecast = request_forecast('2020-09-12')
 
 #forecast = request_forecast(keys.weatherapi, get_ip_city(), '2020-09-12')
