@@ -1,7 +1,9 @@
 from sense_hat import SenseHat
-from datetime import datetime
+from datetime import datetime 
+from dateutil.parser import parse 
 import weather
 import calendar
+import CalenderApi
 
 # Object constructions.
 
@@ -320,11 +322,30 @@ def display_day(day):
     selected_date = datetime(start_year, start_month, day)
     current_weather = weather.request_forecast(selected_date)
     
+    start_datetime = datetime(start_year, start_month, day)
+    end_datetime = datetime(start_year, start_month, day, 23, 59)
+    appointments = CalenderApi.getAppointments(start_datetime, end_datetime)
+    
     # Print data for selected day.
     sense.show_message(selected_date.strftime('%d-%m-%y'))
     if current_weather:
         avg_temp_c = round(current_weather['avgtemp_c'])
         sense.show_message("%sC" % avg_temp_c)
+    
+    appointments_msg = ''
+    if type(appointments) == 'String':
+        appointments_msg = appointments
+    else:
+        for appointment in appointments:
+            summary = appointment['summary'] # Title of appointment.
+            datetime_string = appointment['start'].get('dateTime', appointment['start'].get('date'))
+            appointment_datetime = parse(datetime_string)
+            
+            message = "Afspraak {title} om {time}"
+            appointments_msg += message.format(title = summary, time = appointment_datetime.strftime('%x'))
+    
+    if appointments_msg != '':
+        sense.show_message(appointments_msg)
     
     return run_program()
 
@@ -346,6 +367,8 @@ def run_program():
 
 
 # Main Program.
+
+CalenderApi.login()
 
 if day_is_active:
     display_day(now.day)
