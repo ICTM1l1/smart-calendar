@@ -190,6 +190,8 @@ def move_left(event):
 def click(event):
     global start_year
     global start_month
+    global controller_pos_x
+    global controller_pos_y
     previous_year = start_year
     previous_month = start_month
     
@@ -231,6 +233,9 @@ def click(event):
         start_year += 1
     
     if start_month != previous_month or start_year != previous_year:
+        controller_pos_x = 0
+        controller_pos_y = 1
+        
         # Show the current month and year.
         sense.show_message('%s %s' % (calendar.month_name[start_month], start_year))
     
