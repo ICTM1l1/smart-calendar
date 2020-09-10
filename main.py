@@ -1,5 +1,6 @@
 from sense_hat import SenseHat
 from datetime import datetime
+import weather
 import calendar
 
 # Object constructions.
@@ -196,7 +197,8 @@ def click(event):
         return
     
     if day_is_active:
-        return run_program()
+        run_program()
+        return
     
     # Go to the previous month.
     if controller_pos_x == navigate_history_pos_x and controller_pos_y == navigate_history_pos_y:
@@ -216,9 +218,9 @@ def click(event):
         
     # Go to the current year and month.
     if controller_pos_x == navigate_current_day_pos_x and controller_pos_y == navigate_current_day_pos_y:
-        now = datetime.now()
-        start_year = now.year
-        start_month = now.month
+        current_datetime = datetime.now()
+        start_year = current_datetime.year
+        start_month = current_datetime.month
     
     # Decrease or increase the year if the month has reached an invalid value.
     if start_month < 1:
@@ -238,10 +240,11 @@ def click(event):
     
     selected_day = month_days.get(day_position)
     if selected_day != None:
-        return display_day(selected_day)
+        display_day(selected_day)
+        return
         
     # Reinitialize the program.
-    return run_program()
+    run_program()
 
 def get_month_weeks(year, month):
     return calendar.monthcalendar(year, month) 
@@ -310,10 +313,14 @@ def display_day(day):
     day_is_active = True
     
     selected_date = datetime(start_year, start_month, day)
+    current_weather = weather.request_forecast(selected_date)
+    
+    # Print data for selected day.
     sense.show_message(selected_date.strftime('%d-%m-%y'))
+    if current_weather:
+        sense.show_message("%s C" % current_weather['avgtemp_c'])
     
     return run_program()
-    
 
 def run_program():
     global month_day_y
@@ -326,8 +333,8 @@ def run_program():
 
     draw_week_days()
     draw_month_days()
-    draw_controller()
     draw_navigation()
+    draw_controller()
     
 # End functions.
 
