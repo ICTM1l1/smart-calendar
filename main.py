@@ -12,7 +12,7 @@ sense = SenseHat()
 # End object constructions.
 
 
-# Application configurations.
+# Application configurations
 
 day_is_active = False # Displays the current day on True or the current month on False.
 
@@ -333,8 +333,8 @@ def display_day(day):
         sense.show_message("%sC" % avg_temp_c)
     
     appointments_msg = ''
-    if type(appointments) == 'String':
-        appointments_msg = appointments
+    if not appointments:
+        appointments_msg = 'Geen afspraken'
     else:
         for appointment in appointments:
             summary = appointment['summary'] # Title of appointment.

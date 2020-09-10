@@ -33,6 +33,6 @@ def getAppointments(timeFrom, timeTo):
     calendarResults = service.events().list(calendarId='primary', timeMin=timeFrom, timeMax = timeTo, singleEvents=True, orderBy='startTime').execute()
     calendarData = calendarResults.get('items', [])
     if not calendarData:
-        return "No appointments"
+        return None
     else:
         return calendarData #Array
