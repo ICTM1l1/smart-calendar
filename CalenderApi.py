@@ -36,17 +36,3 @@ def getAppointments(timeFrom, timeTo):
         return "No appointments"
     else:
         return calendarData #Array
-
-now = datetime.datetime.now()
-start_year = now.year
-start_month = now.month
-today = datetime.datetime(now.year, now.month, now.day)
-endoftoday = datetime.datetime(now.year, now.month, now.day, 23, 59)
-
-login()
-appointments = getAppointments(today, endoftoday)
-for appointment in appointments:
-  print(appointment['summary']) #summary is de naam
-  print(appointment['start'].get('dateTime', appointment['start'].get('date')))
-
-print(getAppointments(today, endoftoday))
