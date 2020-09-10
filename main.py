@@ -287,6 +287,8 @@ def display_day(day):
     selected_date = datetime(start_year, start_month, day)
     sense.show_message(selected_date.strftime('%d-%m-%y'))
     
+    return run_program()
+    
 
 def run_program():
     global month_day_y
