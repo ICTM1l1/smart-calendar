@@ -20,6 +20,8 @@ red = (255, 0, 0)
 orange = (255, 165, 0)
 yellow = (255, 255, 0)
 pink = (255, 20, 147)
+purple = (75, 0 , 130)
+brown = (160, 82, 45)
 
 week_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 month_days = {}
@@ -41,8 +43,14 @@ previous_pos_y = controller_pos_y
 
 navigate_history_pos_x = 0
 navigate_history_pos_y = 7
+navigate_history_year_pos_x = 1
+navigate_history_year_pos_y = 7
 navigate_future_pos_x = 6
 navigate_future_pos_y = 7
+navigate_future_year_pos_x = 5
+navigate_future_year_pos_y = 7
+navigate_current_day_pos_x = 3
+navigate_current_day_pos_y = 7
 
 # End application configurations.
 
@@ -57,7 +65,10 @@ def draw_controller():
 
 def draw_navigation():
     sense.set_pixel(navigate_history_pos_x, navigate_history_pos_y, pink)
+    sense.set_pixel(navigate_history_year_pos_x, navigate_history_year_pos_y, purple)
     sense.set_pixel(navigate_future_pos_x, navigate_future_pos_y, pink)
+    sense.set_pixel(navigate_future_year_pos_x, navigate_future_year_pos_y, purple)
+    sense.set_pixel(navigate_current_day_pos_x, navigate_current_day_pos_y, brown)
 
 def move_up(event):
     global controller_pos_y
@@ -190,10 +201,24 @@ def click(event):
     # Go to the previous month.
     if controller_pos_x == navigate_history_pos_x and controller_pos_y == navigate_history_pos_y:
         start_month -= 1
-        
+    
+    # Go to the previous year.
+    if controller_pos_x == navigate_history_year_pos_x and controller_pos_y == navigate_history_year_pos_y:
+        start_year -= 1
+    
     # Go to the next month.
     if controller_pos_x == navigate_future_pos_x and controller_pos_y == navigate_future_pos_y:
         start_month += 1
+    
+    # Go to the next year.
+    if controller_pos_x == navigate_future_year_pos_x and controller_pos_y == navigate_future_year_pos_y:
+        start_year += 1
+        
+    # Go to the current year and month.
+    if controller_pos_x == navigate_current_day_pos_x and controller_pos_y == navigate_current_day_pos_y:
+        now = datetime.now()
+        start_year = now.year
+        start_month = now.month
     
     # Decrease or increase the year if the month has reached an invalid value.
     if start_month < 1:
