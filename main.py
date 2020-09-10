@@ -318,7 +318,8 @@ def display_day(day):
     # Print data for selected day.
     sense.show_message(selected_date.strftime('%d-%m-%y'))
     if current_weather:
-        sense.show_message("%s C" % current_weather['avgtemp_c'])
+        avg_temp_c = round(current_weather['avgtemp_c'])
+        sense.show_message("%sC" % avg_temp_c)
     
     return run_program()
 
