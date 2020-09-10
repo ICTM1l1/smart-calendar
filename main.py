@@ -11,6 +11,8 @@ sense = SenseHat()
 
 # Application configurations.
 
+day_is_active = False # Displays the current day on True or the current month on False.
+
 white = (255, 255, 255)
 blue = (0, 0, 255)
 green = (0, 128, 0)
@@ -20,6 +22,7 @@ yellow = (255, 255, 0)
 pink = (255, 20, 147)
 
 week_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+month_days = {}
 
 now = datetime.now()
 start_year = now.year
@@ -181,6 +184,9 @@ def click(event):
     if event.action != 'pressed':
         return
     
+    if day_is_active:
+        return run_program()
+    
     # Go to the previous month.
     if controller_pos_x == navigate_history_pos_x and controller_pos_y == navigate_history_pos_y:
         start_month -= 1
@@ -201,8 +207,16 @@ def click(event):
         # Show the current month and year.
         sense.show_message('%s %s' % (calendar.month_name[start_month], start_year))
     
+    # Shows a specific date.
+    day_position = '{pos_y}{pos_x}'
+    day_position = day_position.format(pos_y = controller_pos_y, pos_x = controller_pos_x)
+    
+    selected_day = month_days.get(day_position)
+    if selected_day != None:
+        return display_day(selected_day)
+        
     # Reinitialize the program.
-    run_program()
+    return run_program()
 
 def get_month_weeks(year, month):
     return calendar.monthcalendar(year, month) 
@@ -254,14 +268,31 @@ def draw_month_days():
                 
             
             sense.set_pixel(month_day_x, month_day_y, color)
+            day_position = '{pos_y}{pos_x}'
+            day_position = day_position.format(pos_y = month_day_y, pos_x = month_day_x)
+            month_days[day_position] = day
+            
             month_day_x += 1
             
         # Create new row for displaying the days.
         month_day_y += 1
         month_day_x = 0
 
+def display_day(day):
+    global day_is_active
+    
+    sense.clear(0,0,0)
+    day_is_active = True
+    
+    selected_date = datetime(start_year, start_month, day)
+    sense.show_message(selected_date.strftime('%d-%m-%y'))
+    
+
 def run_program():
     global month_day_y
+    global day_is_active
+    
+    day_is_active = False
     
     sense.clear(0,0,0)
     month_day_y = 1
@@ -270,13 +301,16 @@ def run_program():
     draw_month_days()
     draw_controller()
     draw_navigation()
-
+    
 # End functions.
 
 
 # Main Program.
 
-run_program()
+if day_is_active:
+    display_day(now.day)
+else:
+    run_program()
 
 sense.stick.direction_up = move_up
 sense.stick.direction_down = move_down
